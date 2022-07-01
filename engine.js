@@ -54,6 +54,7 @@ function cameraToWorldOffset([camera_x, camera_y]) {
 }
 
 let logged = false;
+let colorGrid;
 function draw() {
   // Keyboard controls!
   if (keyIsDown(LEFT_ARROW)) {
@@ -90,7 +91,7 @@ function draw() {
   }
 
 
-let colorGrid = [tile_columns];
+colorGrid = [tile_columns];
 for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
 
   for (let y = 0; y < tile_rows; y++) {
@@ -99,19 +100,44 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
         camera_offset.x,
         camera_offset.y
       ]);
+      if (x>0) autoTileLeft(x, y);
+      if (y>0) autoTileUp(x, y);
     }
   }
 
-  /*if (!logged) {
+
+  //autotile test 3,1 and 3,2
+  fill(colorGrid[3][2]);
+  push();
+  //translate(world_offset.x * tile_width - camera_offset.x, world_offset.y * tile_height - camera_offset.y);
+  //translate(world_offset.x+width/2, world_offset.y+height/2);
+  translate(-camera_offset.x, -camera_offset.y);
+  //circle(2.5*tile_width, 1.5*tile_height, 100);
+  pop();
+
+  if (!logged) {
     console.log(colorGrid);
     logged = true;
-  }*/
+  }
   //throw new Error("debugging colorgrid");
   describeMouseTile(world_pos, [camera_offset.x, camera_offset.y]);
 
   if (window.p3_drawAfter) {
     window.p3_drawAfter();
   }
+}
+
+function autoTileLeft(x, y) {
+  //console.log("autoTileLeft ", x, y);
+  push();
+  fill(colorGrid[x][y]);
+  translate(-camera_offset.x, -camera_offset.y);
+  circle(x*tile_width-tile_width*1.2, y*tile_height-tile_height/2, tile_width/4);
+  pop();
+}
+
+function autoTileUp(x, y) {
+  //console.log("autoTileUp ", x, y);
 }
 
 function screenToWorld([mouse_x, mouse_y], [camera_x, camera_y]) {
