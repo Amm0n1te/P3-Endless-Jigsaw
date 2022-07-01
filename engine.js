@@ -53,6 +53,7 @@ function cameraToWorldOffset([camera_x, camera_y]) {
   return { x: Math.round(world_x), y: Math.round(world_y) };
 }
 
+let logged = false;
 function draw() {
   // Keyboard controls!
   if (keyIsDown(LEFT_ARROW)) {
@@ -88,15 +89,24 @@ function draw() {
     window.p3_drawBefore();
   }
 
+
+let colorGrid = [tile_columns];
+for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
+
   for (let y = 0; y < tile_rows; y++) {
     for (let x = 0; x < tile_columns; x++) {
-      drawTile([x + world_offset.x, y + world_offset.y], [
+      colorGrid[x][y] = drawTile([x + world_offset.x, y + world_offset.y], [
         camera_offset.x,
         camera_offset.y
       ]);
     }
   }
 
+  /*if (!logged) {
+    console.log(colorGrid);
+    logged = true;
+  }*/
+  //throw new Error("debugging colorgrid");
   describeMouseTile(world_pos, [camera_offset.x, camera_offset.y]);
 
   if (window.p3_drawAfter) {
@@ -134,11 +144,14 @@ function describeMouseTile([world_x, world_y], [camera_x, camera_y]) {
 // Draw a tile, mostly by calling the user's drawing code.
 function drawTile([world_x, world_y], [camera_x, camera_y]) {
   push();
+  let drewcolor;
   translate(world_x * tile_width - camera_x, world_y * tile_height - camera_y);
   if (window.p3_drawTile) {
-    window.p3_drawTile(world_x, world_y);
+    drewcolor = window.p3_drawTile(world_x, world_y);
   }
   pop();
+  //console.log("drawTile: ", drewcolor);
+  return drewcolor;
 }
 
 function mouseClicked() {

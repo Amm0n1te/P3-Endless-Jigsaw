@@ -51,9 +51,11 @@ function p3_drawBefore() {}
 
 function p3_drawTile(i, j) {
   let rand = noise(i, j);
-  if (rand < 0.33) fill(blue);
-  else if (rand < 0.5) fill(orange);
-  else fill(white);
+  let fillcolor;
+  if (rand < 0.33) fillcolor = blue;
+  else if (rand < 0.5) fillcolor = orange;
+  else fillcolor = white;
+  fill(fillcolor);
 
   push();
   beginShape();
@@ -71,6 +73,8 @@ function p3_drawTile(i, j) {
   }
 
   pop();
+  //console.log(fillcolor);
+  return fillcolor;
 }
 
 function p3_drawSelectedTile(i, j) {
