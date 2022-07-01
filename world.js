@@ -22,15 +22,15 @@ let worldSeed;
 
 function p3_worldKeyChanged(key) {
   worldSeed = XXH.h32(key, 0);
-  noiseSeed(worldSeed);
+  noiseSeed(worldSeed);  
   randomSeed(worldSeed);
 }
 
 function p3_tileWidth() {
-  return 16;
+  return 32;
 }
 function p3_tileHeight() {
-  return 16;
+  return 32;
 }
 
 let [tw, th] = [p3_tileWidth(), p3_tileHeight()];
@@ -46,17 +46,18 @@ function p3_tileClicked(i, j) {
 function p3_drawBefore() {}
 
 function p3_drawTile(i, j) {
-  noStroke();
-  fill(noise(i, j) * 255)
+  //noStroke();
+  //fill(noise(i, j) * 255)
+  fill(255);
 
   push();
-
   beginShape();
   vertex(0, 0);
   vertex(0, tw);
   vertex(th, tw);
   vertex(th, 0);
   endShape(CLOSE);
+  //line(0, th/2, tw/4, th/2);
 
   let n = clicks[[i, j]] | 0;
   if (n % 2 == 1) {

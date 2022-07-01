@@ -12,16 +12,16 @@ let camera_offset;
 
 function setup() {
   camera_offset = new p5.Vector(0, 0);
-  camera_velocity = new p5.Vector(0, 0);
+  camera_velocity = new p5.Vector(0, 0); 
 
   let canvas = createCanvas(800, 400);
-  canvas.parent("container");
+  canvas.parent("container");  
 
   if (window.p3_setup) {
-    window.p3_setup();
+    window.p3_setup();           
   }
 
-  let label = createP();
+  let label = createP();      
   label.html("World key: ");
   label.parent("container");
 
@@ -37,11 +37,11 @@ function setup() {
 }
 
 function rebuildWorld(key) {
-  if (window.p3_worldKeyChanged) {
+  if (window.p3_worldKeyChanged) { 
     window.p3_worldKeyChanged(key);
   }
-  tile_width = window.p3_tileWidth ? window.p3_tileWidth() : 32;
-  tile_height = window.p3_tileHeight ? window.p3_tileHeight() : 32;
+  tile_width = window.p3_tileWidth ? window.p3_tileWidth() : 32;  
+  tile_height = window.p3_tileHeight ? window.p3_tileHeight() : 32;  
   tile_columns = Math.ceil(width / tile_width);
   tile_rows = Math.ceil(height / tile_height);
 }
@@ -104,8 +104,8 @@ function draw() {
 }
 
 function screenToWorld([screen_x, screen_y], [camera_x, camera_y]) {
-  screen_x += camera_x;
-  screen_y += camera_y;
+  screen_x += camera_x - p3_tileWidth()/2;
+  screen_y += camera_y - p3_tileHeight()/2;
   screen_x /= tile_width;
   screen_y /= tile_height;
   return [Math.round(screen_x), Math.round(screen_y)];
