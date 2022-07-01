@@ -10,6 +10,7 @@ let tile_rows;
 let camera_velocity;
 let camera_offset;
 
+
 function setup() {
   camera_offset = new p5.Vector(0, 0);
   camera_velocity = new p5.Vector(0, 0); 
@@ -103,12 +104,12 @@ function draw() {
   }
 }
 
-function screenToWorld([screen_x, screen_y], [camera_x, camera_y]) {
-  screen_x += camera_x - p3_tileWidth()/2;
-  screen_y += camera_y - p3_tileHeight()/2;
-  screen_x /= tile_width;
-  screen_y /= tile_height;
-  return [Math.round(screen_x), Math.round(screen_y)];
+function screenToWorld([mouse_x, mouse_y], [camera_x, camera_y]) {
+  mouse_x += camera_x - p3_tileWidth()/2;
+  mouse_y += camera_y - p3_tileHeight()/2;
+  mouse_x /= tile_width;
+  mouse_y /= tile_height;
+  return [Math.round(mouse_x), Math.round(mouse_y)];
 }
 
 // Display a discription of the tile at world_x, world_y.
@@ -116,19 +117,19 @@ function describeMouseTile([world_x, world_y], [camera_x, camera_y]) {
   if (window.p3_drawSelectedTile) {
     push()
     translate(world_x * tile_width - camera_x, world_y * tile_height - camera_y);
-    window.p3_drawSelectedTile(world_x, world_y, camera_x, camera_y);
+    window.p3_drawSelectedTile(world_x, world_y/*, camera_x, camera_y*/);
     pop()
   }
 }
 
-function drawTileDescription([world_x, world_y], [screen_x, screen_y]) {
+/*function drawTileDescription([world_x, world_y], [screen_x, screen_y]) {
   push();
-  translate(screen_x, screen_y);
+  //translate(screen_x, screen_y);
   if (window.p3_drawSelectedTile) {
     window.p3_drawSelectedTile(world_x, world_y, screen_x, screen_y);
   }
   pop();
-}
+}*/
 
 // Draw a tile, mostly by calling the user's drawing code.
 function drawTile([world_x, world_y], [camera_x, camera_y]) {

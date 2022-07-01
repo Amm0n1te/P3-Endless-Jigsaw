@@ -14,6 +14,10 @@
     p3_drawAfter
 */
 
+let orange = '#FB8500';
+let blue = '#219EBC';
+let white = '#EBF5DF';
+
 function p3_preload() {}
 
 function p3_setup() {}
@@ -27,10 +31,10 @@ function p3_worldKeyChanged(key) {
 }
 
 function p3_tileWidth() {
-  return 32;
+  return 64;
 }
 function p3_tileHeight() {
-  return 32;
+  return 64;
 }
 
 let [tw, th] = [p3_tileWidth(), p3_tileHeight()];
@@ -46,9 +50,10 @@ function p3_tileClicked(i, j) {
 function p3_drawBefore() {}
 
 function p3_drawTile(i, j) {
-  //noStroke();
-  //fill(noise(i, j) * 255)
-  fill(255);
+  let rand = noise(i, j);
+  if (rand < 0.33) fill(blue);
+  else if (rand < 0.5) fill(orange);
+  else fill(white);
 
   push();
   beginShape();
