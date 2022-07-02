@@ -69,7 +69,7 @@ function p3_drawTile(i, j) {
   let n = clicks[[i, j]] | 0;
   if (n % 2 == 1) {
     fill(255, 255, 0, 180);
-    ellipse(th/2, tw/2, 10, 10);
+    circle(th/2, tw/2, tile_width/2);
   }
 
   pop();
@@ -79,14 +79,15 @@ function p3_drawTile(i, j) {
 
 function p3_drawSelectedTile(i, j) {
   noFill();
-  stroke(0, 255, 0, 128);
+  stroke(0);
 
-  beginShape();
+  /*beginShape();
   vertex(0, 0);
   vertex(0, tw);
   vertex(th, tw);
   vertex(th, 0);
-  endShape(CLOSE);
+  endShape(CLOSE);*/
+  circle(tile_width/2, tile_height/2, tile_width/2);
 
   noStroke();
   fill(0);
