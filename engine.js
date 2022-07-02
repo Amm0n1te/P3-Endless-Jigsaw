@@ -101,11 +101,17 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
     for (let x = 0; x < tile_columns; x++) {
       //colorGrid[x][y] = drawTile([x + world_offset.x, y + world_offset.y], [camera_offset.x,camera_offset.y], x, y);
       colorGrid[x][y] = drawTile(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
-      if (x>0) autoTileLeft(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
-      if (y>0) autoTileUp(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
+      if (x>0) autoTileHorizontal(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
+      if (y>0) autoTileVertical(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
+     // if (y == tile_rows-1) autoTileVertical(world_offset.x, world_offset.y, camera.x, camera.y, x, tile_rows);
     }
-    autoTileLeft(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, tile_columns, y);
+    autoTileHorizontal(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, tile_columns, y);
   }
+  for(let x = 0; x < tile_columns; x++) {
+    autoTileVertical(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, tile_rows);
+    //console.log("asdf");
+  }
+  //console.log(tile_rows);
   //world_offset is actually camera position
   //camera_offset is camera offset from origin
 
@@ -130,7 +136,7 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
   }
 }
 
-function autoTileLeft(world_x, world_y, camera_x, camera_y, x, y) {
+function autoTileHorizontal(world_x, world_y, camera_x, camera_y, x, y) {
   push();
   fill(colorGrid[x-1][y]);
   //translate(world_offset.x*tile_width-camera_offset.x, world_offset.y*tile_height-camera_offset.y);
@@ -140,10 +146,11 @@ function autoTileLeft(world_x, world_y, camera_x, camera_y, x, y) {
   pop();
 }
 
-function autoTileUp(world_x, world_y, camera_x, camera_y, x, y) {
+function autoTileVertical(world_x, world_y, camera_x, camera_y, x, y) {
   push();
   fill(colorGrid[x][y-1]);
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
+  //if (y == tile_rows) circle(x, y, 500);
   circle(tile_width/2, -9*tile_height/8, tile_height/4);
   circle(tile_width/2, tile_height/8, tile_width/4);
   pop();
