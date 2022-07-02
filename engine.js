@@ -102,7 +102,7 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
       //colorGrid[x][y] = drawTile([x + world_offset.x, y + world_offset.y], [camera_offset.x,camera_offset.y], x, y);
       colorGrid[x][y] = drawTile(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
       if (x>0) autoTileLeft(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
-      //if (y>0) autoTileUp(x, y);
+      if (y>0) autoTileUp(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
     }
     autoTileLeft(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, tile_columns, y);
   }
@@ -115,7 +115,7 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
   //translate(world_offset.x * tile_width - camera_offset.x, world_offset.y * tile_height - camera_offset.y);
   translate(world_offset.x+width/2, world_offset.y+height/2);
   //translate(camera_offset.x, camera_offset.y);
-  circle(1.5*tile_width, 1.5*tile_height, 100);
+  //circle(1.5*tile_width, 1.5*tile_height, 100);
   pop();
 
   if (!logged) {
@@ -131,18 +131,22 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
 }
 
 function autoTileLeft(world_x, world_y, camera_x, camera_y, x, y) {
-  //if (x == tile_columns) console.log("asdfasdf");
-  //console.log("autoTileLeft ", x, y);
   push();
   fill(colorGrid[x-1][y]);
   //translate(world_offset.x*tile_width-camera_offset.x, world_offset.y*tile_height-camera_offset.y);
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
   circle(-9*tile_width/8, tile_height/2, tile_width/4);
+  circle(tile_width/8, tile_height/2, tile_width/4);
   pop();
 }
 
-function autoTileUp(x, y) {
-  //console.log("autoTileUp ", x, y);
+function autoTileUp(world_x, world_y, camera_x, camera_y, x, y) {
+  push();
+  fill(colorGrid[x][y-1]);
+  translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
+  circle(tile_width/2, -9*tile_height/8, tile_height/4);
+  circle(tile_width/2, tile_height/8, tile_width/4);
+  pop();
 }
 
 function screenToWorld([mouse_x, mouse_y], [camera_x, camera_y]) {
