@@ -67,7 +67,6 @@ function p3_drawTile(i, j) {
 
   let n = clicks[[i, j]] | 0;
   if (n % 2 == 1) {
-    //fill(255, 255, 0, 180);
     fill(0);
     circle(th/2, tw/2, tile_width/2);
   }
