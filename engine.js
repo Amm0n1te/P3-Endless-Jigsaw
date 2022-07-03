@@ -116,21 +116,26 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
   }
 }
 
+let puzzleoffset2 = 1.2;
+let puzzleoffset1 = 0.8;
+let puzzleinward = 4;
 function autoTileHorizontal(world_x, world_y, camera_x, camera_y, x, y) {
+  noStroke();
   push();
   fill(colorGrid[x-1][y]);
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
-  circle(-9*tile_width/8, tile_height/2, tile_width/4);
-  circle(tile_width/8, tile_height/2, tile_width/4);
+  circle(-9*tile_width/8+puzzleinward, puzzleoffset2*tile_height/2, tile_width/4);
+  circle(tile_width/8-puzzleinward, puzzleoffset1*tile_height/2, tile_width/4);
   pop();
 }
 
 function autoTileVertical(world_x, world_y, camera_x, camera_y, x, y) {
+  noStroke();
   push();
   fill(colorGrid[x][y-1]);
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
-  circle(tile_width/2, -9*tile_height/8, tile_height/4);
-  circle(tile_width/2, tile_height/8, tile_width/4);
+  circle(puzzleoffset1*tile_width/2, -9*tile_height/8+puzzleinward, tile_height/4);
+  circle(puzzleoffset2*tile_width/2, tile_height/8-puzzleinward, tile_width/4);
   pop();
 }
 
@@ -156,6 +161,7 @@ function describeMouseTile([world_x, world_y], [camera_x, camera_y]) {
 
 // Draw a tile, mostly by calling the user's drawing code.
 function drawTile(world_x, world_y, camera_x, camera_y, x, y) {
+  noStroke();
   push();
   let drewcolor;
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
