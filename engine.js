@@ -12,7 +12,6 @@ let camera_offset;
 
 
 function setup() {
-  //frameRate(5);
   camera_offset = new p5.Vector(0, 0);
   camera_velocity = new p5.Vector(0, 0); 
 
@@ -60,16 +59,16 @@ let logged = false;
 let colorGrid;
 function draw() {
   // Keyboard controls!
-  if (keyIsDown(LEFT_ARROW)) {
+  if (keyIsDown(LEFT_ARROW)) { 
     camera_velocity.x -= 1;
   }
-  if (keyIsDown(RIGHT_ARROW)) {
+  if (keyIsDown(RIGHT_ARROW)) { 
     camera_velocity.x += 1;
   }
-  if (keyIsDown(DOWN_ARROW)) {
+  if (keyIsDown(DOWN_ARROW)) { 
     camera_velocity.y += 1;
   }
-  if (keyIsDown(UP_ARROW)) {
+  if (keyIsDown(UP_ARROW)) { 
     camera_velocity.y -= 1;
   }
 
@@ -99,36 +98,17 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
 
   for (let y = 0; y < tile_rows; y++) {
     for (let x = 0; x < tile_columns; x++) {
-      //colorGrid[x][y] = drawTile([x + world_offset.x, y + world_offset.y], [camera_offset.x,camera_offset.y], x, y);
       colorGrid[x][y] = drawTile(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
       if (x>0) autoTileHorizontal(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
       if (y>0) autoTileVertical(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, y);
-     // if (y == tile_rows-1) autoTileVertical(world_offset.x, world_offset.y, camera.x, camera.y, x, tile_rows);
     }
     autoTileHorizontal(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, tile_columns, y);
   }
   for(let x = 0; x < tile_columns; x++) {
     autoTileVertical(world_offset.x, world_offset.y, camera_offset.x, camera_offset.y, x, tile_rows);
-    //console.log("asdf");
   }
-  //console.log(tile_rows);
-  //world_offset is actually camera position
-  //camera_offset is camera offset from origin
+  
 
-  //autotile test 3,1 and 3,2
-  fill(colorGrid[3][2]);
-  push();
-  //translate(world_offset.x * tile_width - camera_offset.x, world_offset.y * tile_height - camera_offset.y);
-  translate(world_offset.x+width/2, world_offset.y+height/2);
-  //translate(camera_offset.x, camera_offset.y);
-  //circle(1.5*tile_width, 1.5*tile_height, 100);
-  pop();
-
-  if (!logged) {
-    console.log(colorGrid);
-    logged = true;
-  }
-  //throw new Error("debugging colorgrid");
   describeMouseTile(world_pos, [camera_offset.x, camera_offset.y]);
 
   if (window.p3_drawAfter) {
@@ -139,7 +119,6 @@ for (let a=0; a<tile_columns; a++) colorGrid[a] = Array(tile_rows);
 function autoTileHorizontal(world_x, world_y, camera_x, camera_y, x, y) {
   push();
   fill(colorGrid[x-1][y]);
-  //translate(world_offset.x*tile_width-camera_offset.x, world_offset.y*tile_height-camera_offset.y);
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
   circle(-9*tile_width/8, tile_height/2, tile_width/4);
   circle(tile_width/8, tile_height/2, tile_width/4);
@@ -150,7 +129,6 @@ function autoTileVertical(world_x, world_y, camera_x, camera_y, x, y) {
   push();
   fill(colorGrid[x][y-1]);
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
-  //if (y == tile_rows) circle(x, y, 500);
   circle(tile_width/2, -9*tile_height/8, tile_height/4);
   circle(tile_width/2, tile_height/8, tile_width/4);
   pop();
@@ -169,7 +147,7 @@ function describeMouseTile([world_x, world_y], [camera_x, camera_y]) {
   if (window.p3_drawSelectedTile) {
     push()
     translate(world_x * tile_width - camera_x, world_y * tile_height - camera_y);
-    window.p3_drawSelectedTile(world_x, world_y/*, camera_x, camera_y*/);
+    window.p3_drawSelectedTile(world_x, world_y);
     pop()
   }
 }
@@ -180,14 +158,11 @@ function describeMouseTile([world_x, world_y], [camera_x, camera_y]) {
 function drawTile(world_x, world_y, camera_x, camera_y, x, y) {
   push();
   let drewcolor;
-  //translate(world_x * tile_width - camera_x, world_y * tile_height - camera_y);//(world_offset.x + x)*tile_width - camera_x
   translate((world_x+x)*tile_width - camera_x, (world_y+y)*tile_height - camera_y);
-  //circle(0, 0, 5);
   if (window.p3_drawTile) {
     drewcolor = window.p3_drawTile(world_x+x, world_y+y);
   }
   pop();
-  //console.log("drawTile: ", drewcolor);
   return drewcolor;
 }
 
